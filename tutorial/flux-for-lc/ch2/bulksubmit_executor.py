@@ -41,6 +41,7 @@ def main():
     label = "bulksubmit_executor"
     with FluxExecutor() as executor:
         compute_jobspec = JobspecV1.from_command(args.command)
+        compute_jobspec.environment = {"TMPDIR": "/tmp/"}
         futures = [executor.submit(compute_jobspec) for _ in range(args.njobs)]
         # wait for the jobid for each job, as a proxy for the job being submitted
         for fut in futures:
